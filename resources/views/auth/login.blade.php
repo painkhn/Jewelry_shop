@@ -31,6 +31,8 @@
                     </div>
                     <a href="{{ route('register') }}"
                         class="w-full md:w-[260px] px-4 py-2 rounded-xl border border-black border-dashed text-center">Зарегистрироваться</a>
+                    <a href="/login/yandex"
+                        class="w-full md:w-[260px] px-4 py-2 rounded-xl border border-black border-dashed text-center">Вход по Яндекс</a>
                 </div>
             </div>
         </form>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use Illuminate\Support\Facades\File;
 use App\Models\Position;
+use App\Models\User;
 
 class AdminController extends Controller
 {
@@ -14,7 +15,18 @@ class AdminController extends Controller
     {
         // Открытие админки
         $category = Category::get();
-        return view('admin', ['categories' => $category]);
+        $newUsers = User::where('created_at', '>=', now()->subDays(7))
+                        ->selectRaw('DATE(created_at) as date, COUNT(*) as count')
+                        ->groupBy('date')
+                        ->get();
+        $dates = $newUsers->pluck('date')->toArray();
+        $counts = $newUsers->pluck('count')->toArray();
+    
+        return view('admin', [
+            'categories' => $category,
+            'dates' => $dates,
+            'counts' => $counts
+        ]);
     }
     public function add_category(Request $request)
     {

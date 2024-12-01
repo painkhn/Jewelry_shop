@@ -1,3 +1,5 @@
+import 'flowbite';
+
 /* мобильное меню */
 $("#toggler").click(() => {
     $("#menu").toggleClass("max-lg:top-0 max-lg:-translate-y-full")
@@ -18,3 +20,7 @@ $(".FAQ").each((i, el) => {
 $("#tabs").tabs({
     active: 0
 });
+
+
+
+  

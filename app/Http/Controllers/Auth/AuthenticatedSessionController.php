@@ -8,6 +8,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Laravel\Socialite\Facades\Socialite;
+use App\Models\User;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -43,5 +45,40 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+
+    public function RedirectYandex() // перенаправляем юзера на яндекс Auth
+    {
+        return Socialite::driver('yandex')->redirect();
+    }
+    public function CallbackYandex() {
+        $user = Socialite::driver('yandex')->user();
+
+        // dd($user);
+        $existingUser = User::where('email', $user->email)->first();
+        if (!$existingUser) {
+            $userData = $user->user;
+            if (isset($userData['default_phone']['number'])) {
+                $phoneNumber = $userData['default_phone']['number'];
+            } else {
+                $phoneNumber = null;
+            }
+
+            $newUser = User::create([
+                'name'=>$user->name,
+                'email'=>$user->email,
+                'password'=>null,
+                'phone'=>$phoneNumber
+            ]);
+            Auth::login($newUser);
+            return redirect(route('index'));
+        } else {
+            if ($existingUser->password === null){
+                Auth::login($existingUser);
+                return redirect(route('index'));
+            } else {
+                return redirect(route('login'))->with('error', 'Используйте логин-пароль для входа');
+            }
+        }
     }
 }

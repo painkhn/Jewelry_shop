@@ -13,7 +13,7 @@
             <div class="w-full lg:w-1/2 flex flex-col gap-6 p-4 rounded-xl bg-white">
                 @if (Auth::user() and Auth::user()->is_admin == 1)
                     <div class="flex items-center gap-4 self-end">
-                        <a href="{{ route('EditTovar', ['product_id' => $product->id]) }}" class="w-8 h-8">
+                        <a href="{{ route('EditTovarRender', ['product_id' => $product->id]) }}" class="w-8 h-8">
                             <img src="{{ asset('Images/products/edit.svg') }}" alt="">
                         </a>
                         <a href="{{ route('deleteTovar', ['product_id' => $product->id]) }}" class="w-8 h-8">

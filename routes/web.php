@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\BasketController;
@@ -24,9 +25,13 @@ Route::get('/liked/open', [BasketController::class, 'open_liked'])->name('OpenLi
 
 Route::get('/admin', [AdminController::class, 'index'])->name('Admin')->middleware([IsAdmin::class]);
 Route::get('/delete/{product_id}', [AdminController::class, 'delete_position'])->name('deleteTovar')->middleware([IsAdmin::class]);
-Route::get('/edit/{product_id}', [AdminController::class, 'edit_position'])->name('EditTovar')->middleware([IsAdmin::class]);
+Route::get('/edit/{product_id}', [AdminController::class, 'edit_position'])->name('EditTovarRender')->middleware([IsAdmin::class]);
 Route::post('/edit/{product_id}', [AdminController::class, 'save_edit_position'])->name('EditTovar')->middleware([IsAdmin::class]);
 Route::post('/admin/category/add', [AdminController::class, 'add_category'])->name('AddCategory')->middleware([IsAdmin::class]);
 Route::post('/admin/position/add', [AdminController::class, 'new_position'])->name('NewPosition')->middleware([IsAdmin::class]);
+
+Route::get('/login/yandex', [AuthenticatedSessionController::class, 'RedirectYandex'])->name('login.yandex');
+
+Route::get('/login/yandex/callback', [AuthenticatedSessionController::class, 'CallbackYandex'])->name('login.yandex.call');
 
 require __DIR__.'/auth.php';
