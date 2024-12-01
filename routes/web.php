@@ -30,7 +30,7 @@ Route::post('/edit/{product_id}', [AdminController::class, 'save_edit_position']
 Route::post('/admin/category/add', [AdminController::class, 'add_category'])->name('AddCategory')->middleware([IsAdmin::class]);
 Route::post('/admin/position/add', [AdminController::class, 'new_position'])->name('NewPosition')->middleware([IsAdmin::class]);
 
-Route::get('/login/yandex', [AuthenticatedSessionController::class, 'RedirectYandex'])->name('login.yandex');
+Route::get('/login/yandex', [AuthenticatedSessionController::class, 'yandex'])->name('login.yandex');
 
 Route::get('/login/yandex/callback', [AuthenticatedSessionController::class, 'CallbackYandex'])->name('login.yandex.call');
 

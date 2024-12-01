@@ -47,7 +47,7 @@ class AuthenticatedSessionController extends Controller
         return redirect('/');
     }
 
-    public function RedirectYandex() // перенаправляем юзера на яндекс Auth
+    public function yandex() // перенаправляем юзера на яндекс Auth
     {
         return Socialite::driver('yandex')->redirect();
     }
