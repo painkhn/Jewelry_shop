@@ -29,6 +29,7 @@ Route::get('/edit/{product_id}', [AdminController::class, 'edit_position'])->nam
 Route::post('/edit/{product_id}', [AdminController::class, 'save_edit_position'])->name('EditTovar')->middleware([IsAdmin::class]);
 Route::post('/admin/category/add', [AdminController::class, 'add_category'])->name('AddCategory')->middleware([IsAdmin::class]);
 Route::post('/admin/position/add', [AdminController::class, 'new_position'])->name('NewPosition')->middleware([IsAdmin::class]);
+Route::get('/admin/users/download', [AdminController::class, 'excel'])->name('users.download.excel')->middleware(IsAdmin::class);
 
 Route::get('/login/yandex', [AuthenticatedSessionController::class, 'yandex'])->name('login.yandex');
 

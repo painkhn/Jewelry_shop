@@ -7,6 +7,9 @@ use App\Models\Category;
 use Illuminate\Support\Facades\File;
 use App\Models\Position;
 use App\Models\User;
+use Carbon\Carbon;
+use App\Exports\ReportExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -71,6 +74,25 @@ class AdminController extends Controller
         Position::create($data);
 
         return redirect()->back();
+    }
+
+    public function excel()
+    {
+        $totalUsers = User::count() ?: '0';
+        $usersThisMonth = User::whereMonth('created_at', Carbon::now()->month)->count() ?: '0';
+        $usersThisHalfYear = User::where('created_at', '>=', Carbon::now()->subMonths(6))->count() ?: '0';
+        $usersThisYear = User::where('created_at', '>=', Carbon::now()->subYear())->count() ?: '0';
+
+        $data = [
+            [' '],
+            ['Всего пользователей', $totalUsers],
+            ['Пользователей за этот месяц', $usersThisMonth],
+            ['Пользователей за полгода', $usersThisHalfYear],
+            ['Пользователей за год', $usersThisYear],
+            [' '],
+        ];
+
+        return Excel::download(new ReportExport($data), 'report.xlsx');
     }
     public function delete_position($product_id)
     {

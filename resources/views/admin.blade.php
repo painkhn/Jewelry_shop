@@ -79,6 +79,13 @@
                 </div>
             </div>
         </div>
+        <div>
+            <a href="{{ route('users.download.excel') }}">
+                <button class="w-full md:w-[260px] px-4 py-2 rounded-xl border border-black border-dashed text-center">
+                    Скачать данные в excel
+                </button>
+            </a>
+        </div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/flowbite@2.5.2/dist/flowbite.min.js"></script>
